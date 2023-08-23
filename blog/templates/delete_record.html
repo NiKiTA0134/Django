@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card m-4">
+    <form action="/{{ model }}/delete/{{ record.id }}/" class="text-center mt-2" method="post">
+        {% csrf_token%}
+        <h1>Confirm delete {{ model }}</h1>
+        <p><strong>{{ model }} text: </strong> {{ record.text }} </p>
+        <button class="btn btn-primary" type="submit">Confirm</button>
+    </form>
+    <form action="/cancel_delete" class="text-center mt-2">
+        {% csrf_token%}
+        <button class="btn btn-primary" type="submit">Cancel</button>
+    </form>
+</div>
+{% endblock %}

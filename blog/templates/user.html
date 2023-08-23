@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %} My questions {% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col">
+        <h3>My Questions - {{ questions|length }}</h3>
+        {% for question in questions %}
+            <div class="card my-3">
+                <div class="card-body">
+                    {% include 'include/render_single_question.html' %}
+                    <a class="mr-2" href="question/edit/{{ question.id }}/">Edit</a>
+                    <a href="question/delete/{{ question.id }}/">Delete</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="col">
+        <h3>My Answers - {{ answers|length }}</h3>
+        {% for answer in answers %}
+            <div class="card my-3">
+                <div class="card-body">
+                    <p>{{ answer.text }}</p>
+                    <a class="mr-2" href="answer/edit/{{ answer.id }}/">Edit</a>
+                    <a href="Answer/delete/{{ answer.id }}/">Delete</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="col">
+        <h3>My status - {{ status }}</h3>
+            <div class="card my-3">
+                <div class="card-body">
+                    <h3>Current stats</h3>
+                    <h4>Questions - {{ questions|length }} | Answers - {{ answers|length }}</h4><br>
+                    <h3>Next status requests</h3>
+                    <center><h4>{{ next_status }}</h4></center>
+                    <h4>Questions - {{questions_request}} | Answers - {{answers_requests}}</h4>
+                </div>
+            </div>
+    </div>
+
+    <div class="col container">
+    {% for notification in notifications %}
+        <div id="alert" class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+            {{ notification.from_user }} {{ notification.action }}d your {{ notification.post_type }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="deleteNotification({{ notification.id }})">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+    </div>
+
+
+</div>
+
+<script>
+    function deleteNotification(id) {
+        fetch(`http://localhost:8000/delete_notification/${ id }`, {
+            mode: 'no-cors'
+        })
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} Main page {% endblock %}
+
+{% block content %}
+
+    {% include 'include/render_messages.html'%}
+
+
+
+
+    {% for question in questions%}
+    <div class="card mb-3">
+        <div class="card-body">
+            {% include 'include/render_single_question.html'%}
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}
